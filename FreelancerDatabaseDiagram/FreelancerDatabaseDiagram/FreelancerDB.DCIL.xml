@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dcl:schema name="dbo" xmlns:dcl="http://schemas.orm.net/DIL/DCIL" xmlns:dil="http://schemas.orm.net/DIL/DIL" xmlns:ddt="http://schemas.orm.net/DIL/DILDT" xmlns:dep="http://schemas.orm.net/DIL/DILEP" xmlns:dml="http://schemas.orm.net/DIL/DMIL" xmlns:ddl="http://schemas.orm.net/DIL/DDIL">
+	<dcl:table name="StarSystem">
+		<dcl:column name="StarSystemId" isNullable="false" isIdentity="true">
+			<dcl:predefinedDataType name="INTEGER" />
+		</dcl:column>
+		<dcl:column name="CoordinateId" isNullable="false" isIdentity="false">
+			<dcl:predefinedDataType name="INTEGER" />
+		</dcl:column>
+		<dcl:column name="StarSystemName" isNullable="false" isIdentity="false">
+			<dcl:predefinedDataType name="CHARACTER VARYING" length="64" />
+		</dcl:column>
+		<dcl:uniquenessConstraint name="StarSystem_PK" isPrimary="true">
+			<dcl:columnRef name="StarSystemId" />
+		</dcl:uniquenessConstraint>
+		<dcl:referenceConstraint name="StarSystem_FK" targetTable="Coordinate">
+			<dcl:columnRef sourceName="CoordinateId" targetName="CoordinateId" />
+		</dcl:referenceConstraint>
+	</dcl:table>
+	<dcl:table name="Coordinate">
+		<dcl:column name="CoordinateId" isNullable="false" isIdentity="true">
+			<dcl:predefinedDataType name="INTEGER" />
+		</dcl:column>
+		<dcl:column name="X" isNullable="false" isIdentity="false">
+			<dcl:predefinedDataType name="INTEGER" />
+		</dcl:column>
+		<dcl:column name="Y" isNullable="false" isIdentity="false">
+			<dcl:predefinedDataType name="INTEGER" />
+		</dcl:column>
+		<dcl:column name="Z" isNullable="false" isIdentity="false">
+			<dcl:predefinedDataType name="INTEGER" />
+		</dcl:column>
+		<dcl:uniquenessConstraint name="Coordinate_PK" isPrimary="true">
+			<dcl:columnRef name="CoordinateId" />
+		</dcl:uniquenessConstraint>
+		<dcl:uniquenessConstraint name="Coordinate_UC" isPrimary="false">
+			<dcl:columnRef name="X" />
+			<dcl:columnRef name="Y" />
+			<dcl:columnRef name="Z" />
+		</dcl:uniquenessConstraint>
+	</dcl:table>
+	<dcl:table name="SolarObject">
+		<dcl:column name="SolarObjectId" isNullable="false" isIdentity="true">
+			<dcl:predefinedDataType name="INTEGER" />
+		</dcl:column>
+		<dcl:column name="CoordinateId" isNullable="false" isIdentity="false">
+			<dcl:predefinedDataType name="INTEGER" />
+		</dcl:column>
+		<dcl:column name="SolarObjectName" isNullable="false" isIdentity="false">
+			<dcl:predefinedDataType name="CHARACTER VARYING" length="256" />
+		</dcl:column>
+		<dcl:column name="SolarObjectTypeId" isNullable="false" isIdentity="false">
+			<dcl:predefinedDataType name="INTEGER" />
+		</dcl:column>
+		<dcl:uniquenessConstraint name="SolarObject_PK" isPrimary="true">
+			<dcl:columnRef name="SolarObjectId" />
+		</dcl:uniquenessConstraint>
+		<dcl:referenceConstraint name="SolarObject_FK1" targetTable="Coordinate">
+			<dcl:columnRef sourceName="CoordinateId" targetName="CoordinateId" />
+		</dcl:referenceConstraint>
+		<dcl:referenceConstraint name="SolarObject_FK2" targetTable="SolarObjectType">
+			<dcl:columnRef sourceName="SolarObjectTypeId" targetName="SolarObjectTypeId" />
+		</dcl:referenceConstraint>
+	</dcl:table>
+	<dcl:table name="SolarObjectIsInStarSystem">
+		<dcl:column name="SolarObjectId" isNullable="false" isIdentity="false">
+			<dcl:predefinedDataType name="INTEGER" />
+		</dcl:column>
+		<dcl:column name="StarSystemId" isNullable="false" isIdentity="false">
+			<dcl:predefinedDataType name="INTEGER" />
+		</dcl:column>
+		<dcl:uniquenessConstraint name="SolarObjectIsInStarSystem_PK" isPrimary="true">
+			<dcl:columnRef name="SolarObjectId" />
+			<dcl:columnRef name="StarSystemId" />
+		</dcl:uniquenessConstraint>
+		<dcl:referenceConstraint name="SolarObjectIsInStarSystem_FK1" targetTable="SolarObject">
+			<dcl:columnRef sourceName="SolarObjectId" targetName="SolarObjectId" />
+		</dcl:referenceConstraint>
+		<dcl:referenceConstraint name="SolarObjectIsInStarSystem_FK2" targetTable="StarSystem">
+			<dcl:columnRef sourceName="StarSystemId" targetName="StarSystemId" />
+		</dcl:referenceConstraint>
+	</dcl:table>
+	<dcl:table name="JumpGateLinksConnections">
+		<dcl:column name="JumpGateId" isNullable="false" isIdentity="false">
+			<dcl:predefinedDataType name="INTEGER" />
+		</dcl:column>
+		<dcl:column name="StarSystemId" isNullable="false" isIdentity="false">
+			<dcl:predefinedDataType name="INTEGER" />
+		</dcl:column>
+		<dcl:uniquenessConstraint name="JumpGateLinksConnections_PK" isPrimary="true">
+			<dcl:columnRef name="JumpGateId" />
+			<dcl:columnRef name="StarSystemId" />
+		</dcl:uniquenessConstraint>
+		<dcl:referenceConstraint name="JumpGateLinksConnections_FK1" targetTable="SolarObject">
+			<dcl:columnRef sourceName="JumpGateId" targetName="SolarObjectId" />
+		</dcl:referenceConstraint>
+		<dcl:referenceConstraint name="JumpGateLinksConnections_FK2" targetTable="StarSystem">
+			<dcl:columnRef sourceName="StarSystemId" targetName="StarSystemId" />
+		</dcl:referenceConstraint>
+	</dcl:table>
+	<dcl:table name="SolarObjectType">
+		<dcl:column name="SolarObjectTypeId" isNullable="false" isIdentity="true">
+			<dcl:predefinedDataType name="INTEGER" />
+		</dcl:column>
+		<dcl:column name="SolarObjectTypeName" isNullable="false" isIdentity="false">
+			<dcl:predefinedDataType name="CHARACTER VARYING" length="32" />
+		</dcl:column>
+		<dcl:uniquenessConstraint name="SolarObjectType_PK" isPrimary="true">
+			<dcl:columnRef name="SolarObjectTypeId" />
+		</dcl:uniquenessConstraint>
+		<dcl:uniquenessConstraint name="SolarObjectType_UC" isPrimary="false">
+			<dcl:columnRef name="SolarObjectTypeName" />
+		</dcl:uniquenessConstraint>
+	</dcl:table>
+	<dcl:table name="TradeLaneRing">
+		<dcl:column name="TradeLaneRingId" isNullable="false" isIdentity="false">
+			<dcl:predefinedDataType name="INTEGER" />
+		</dcl:column>
+		<dcl:column name="ConnectsToTradeLaneRingId" isNullable="true" isIdentity="false">
+			<dcl:predefinedDataType name="INTEGER" />
+		</dcl:column>
+		<dcl:column name="IsEndPoint" isNullable="true" isIdentity="false">
+			<dcl:predefinedDataType name="BOOLEAN" />
+		</dcl:column>
+		<dcl:uniquenessConstraint name="TradeLaneRing_PK" isPrimary="true">
+			<dcl:columnRef name="TradeLaneRingId" />
+		</dcl:uniquenessConstraint>
+		<dcl:referenceConstraint name="TradeLaneRing_FK1" targetTable="TradeLaneRing">
+			<dcl:columnRef sourceName="ConnectsToTradeLaneRingId" targetName="TradeLaneRingId" />
+		</dcl:referenceConstraint>
+		<dcl:referenceConstraint name="TradeLaneRing_FK2" targetTable="SolarObject">
+			<dcl:columnRef sourceName="TradeLaneRingId" targetName="SolarObjectId" />
+		</dcl:referenceConstraint>
+	</dcl:table>
+	<dcl:table name="Base">
+		<dcl:column name="BaseId" isNullable="false" isIdentity="false">
+			<dcl:predefinedDataType name="INTEGER" />
+		</dcl:column>
+		<dcl:column name="FactionId" isNullable="false" isIdentity="false">
+			<dcl:predefinedDataType name="INTEGER" />
+		</dcl:column>
+		<dcl:uniquenessConstraint name="Base_UC" isPrimary="false">
+			<dcl:columnRef name="FactionId" />
+		</dcl:uniquenessConstraint>
+		<dcl:uniquenessConstraint name="Base_PK" isPrimary="true">
+			<dcl:columnRef name="BaseId" />
+		</dcl:uniquenessConstraint>
+		<dcl:referenceConstraint name="Base_FK1" targetTable="Faction">
+			<dcl:columnRef sourceName="FactionId" targetName="FactionId" />
+		</dcl:referenceConstraint>
+		<dcl:referenceConstraint name="Base_FK2" targetTable="SolarObject">
+			<dcl:columnRef sourceName="BaseId" targetName="SolarObjectId" />
+		</dcl:referenceConstraint>
+	</dcl:table>
+	<dcl:table name="Faction">
+		<dcl:column name="FactionId" isNullable="false" isIdentity="true">
+			<dcl:predefinedDataType name="INTEGER" />
+		</dcl:column>
+		<dcl:column name="FactionName" isNullable="false" isIdentity="false">
+			<dcl:predefinedDataType name="CHARACTER VARYING" length="64" />
+		</dcl:column>
+		<dcl:uniquenessConstraint name="Faction_PK" isPrimary="true">
+			<dcl:columnRef name="FactionId" />
+		</dcl:uniquenessConstraint>
+		<dcl:uniquenessConstraint name="Faction_UC" isPrimary="false">
+			<dcl:columnRef name="FactionName" />
+		</dcl:uniquenessConstraint>
+	</dcl:table>
+</dcl:schema>

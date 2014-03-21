@@ -1,0 +1,384 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dil:root xmlns:dil="http://schemas.orm.net/DIL/DIL" xmlns:dcl="http://schemas.orm.net/DIL/DCIL" xmlns:ddt="http://schemas.orm.net/DIL/DILDT" xmlns:dep="http://schemas.orm.net/DIL/DILEP" xmlns:dms="http://schemas.orm.net/DIL/DILMS" xmlns:dml="http://schemas.orm.net/DIL/DMIL" xmlns:ddl="http://schemas.orm.net/DIL/DDIL">
+	<dms:startTransactionStatement isolationLevel="SERIALIZABLE" accessMode="READ WRITE" />
+	<ddl:schemaDefinition schemaName="dbo" defaultCharacterSet="UTF8" />
+	<dms:setSchemaStatement>
+		<ddt:characterStringLiteral value="DBO" />
+	</dms:setSchemaStatement>
+	<ddl:tableDefinition name="StarSystem" schema="dbo">
+		<ddl:columnDefinition name="StarSystemId">
+			<ddt:exactNumeric type="INTEGER" />
+			<ddl:identityColumnSpecification type="ALWAYS">
+				<ddl:sequenceGeneratorStartWithOption>
+					<ddt:exactNumericLiteral value="1" />
+				</ddl:sequenceGeneratorStartWithOption>
+				<ddl:sequenceGeneratorIncrementByOption>
+					<ddt:exactNumericLiteral value="1" />
+				</ddl:sequenceGeneratorIncrementByOption>
+			</ddl:identityColumnSpecification>
+			<ddl:columnConstraintDefinition>
+				<ddl:notNullKeyword />
+			</ddl:columnConstraintDefinition>
+		</ddl:columnDefinition>
+		<ddl:columnDefinition name="CoordinateId">
+			<ddt:exactNumeric type="INTEGER" />
+			<ddl:columnConstraintDefinition>
+				<ddl:notNullKeyword />
+			</ddl:columnConstraintDefinition>
+		</ddl:columnDefinition>
+		<ddl:columnDefinition name="StarSystemName">
+			<ddt:characterString type="CHARACTER VARYING" length="64" />
+			<ddl:columnConstraintDefinition>
+				<ddl:notNullKeyword />
+			</ddl:columnConstraintDefinition>
+		</ddl:columnDefinition>
+		<ddl:tableConstraintDefinition name="StarSystem_PK">
+			<ddl:uniqueConstraintDefinition type="PRIMARY KEY">
+				<dep:simpleColumnReference name="StarSystemId" />
+			</ddl:uniqueConstraintDefinition>
+		</ddl:tableConstraintDefinition>
+	</ddl:tableDefinition>
+	<ddl:tableDefinition name="Coordinate" schema="dbo">
+		<ddl:columnDefinition name="CoordinateId">
+			<ddt:exactNumeric type="INTEGER" />
+			<ddl:identityColumnSpecification type="ALWAYS">
+				<ddl:sequenceGeneratorStartWithOption>
+					<ddt:exactNumericLiteral value="1" />
+				</ddl:sequenceGeneratorStartWithOption>
+				<ddl:sequenceGeneratorIncrementByOption>
+					<ddt:exactNumericLiteral value="1" />
+				</ddl:sequenceGeneratorIncrementByOption>
+			</ddl:identityColumnSpecification>
+			<ddl:columnConstraintDefinition>
+				<ddl:notNullKeyword />
+			</ddl:columnConstraintDefinition>
+		</ddl:columnDefinition>
+		<ddl:columnDefinition name="X">
+			<ddt:exactNumeric type="INTEGER" />
+			<ddl:columnConstraintDefinition>
+				<ddl:notNullKeyword />
+			</ddl:columnConstraintDefinition>
+		</ddl:columnDefinition>
+		<ddl:columnDefinition name="Y">
+			<ddt:exactNumeric type="INTEGER" />
+			<ddl:columnConstraintDefinition>
+				<ddl:notNullKeyword />
+			</ddl:columnConstraintDefinition>
+		</ddl:columnDefinition>
+		<ddl:columnDefinition name="Z">
+			<ddt:exactNumeric type="INTEGER" />
+			<ddl:columnConstraintDefinition>
+				<ddl:notNullKeyword />
+			</ddl:columnConstraintDefinition>
+		</ddl:columnDefinition>
+		<ddl:tableConstraintDefinition name="Coordinate_PK">
+			<ddl:uniqueConstraintDefinition type="PRIMARY KEY">
+				<dep:simpleColumnReference name="CoordinateId" />
+			</ddl:uniqueConstraintDefinition>
+		</ddl:tableConstraintDefinition>
+		<ddl:tableConstraintDefinition name="Coordinate_UC">
+			<ddl:uniqueConstraintDefinition type="UNIQUE">
+				<dep:simpleColumnReference name="X" />
+				<dep:simpleColumnReference name="Y" />
+				<dep:simpleColumnReference name="Z" />
+			</ddl:uniqueConstraintDefinition>
+		</ddl:tableConstraintDefinition>
+	</ddl:tableDefinition>
+	<ddl:tableDefinition name="SolarObject" schema="dbo">
+		<ddl:columnDefinition name="SolarObjectId">
+			<ddt:exactNumeric type="INTEGER" />
+			<ddl:identityColumnSpecification type="ALWAYS">
+				<ddl:sequenceGeneratorStartWithOption>
+					<ddt:exactNumericLiteral value="1" />
+				</ddl:sequenceGeneratorStartWithOption>
+				<ddl:sequenceGeneratorIncrementByOption>
+					<ddt:exactNumericLiteral value="1" />
+				</ddl:sequenceGeneratorIncrementByOption>
+			</ddl:identityColumnSpecification>
+			<ddl:columnConstraintDefinition>
+				<ddl:notNullKeyword />
+			</ddl:columnConstraintDefinition>
+		</ddl:columnDefinition>
+		<ddl:columnDefinition name="CoordinateId">
+			<ddt:exactNumeric type="INTEGER" />
+			<ddl:columnConstraintDefinition>
+				<ddl:notNullKeyword />
+			</ddl:columnConstraintDefinition>
+		</ddl:columnDefinition>
+		<ddl:columnDefinition name="SolarObjectName">
+			<ddt:characterString type="CHARACTER VARYING" length="256" />
+			<ddl:columnConstraintDefinition>
+				<ddl:notNullKeyword />
+			</ddl:columnConstraintDefinition>
+		</ddl:columnDefinition>
+		<ddl:columnDefinition name="SolarObjectTypeId">
+			<ddt:exactNumeric type="INTEGER" />
+			<ddl:columnConstraintDefinition>
+				<ddl:notNullKeyword />
+			</ddl:columnConstraintDefinition>
+		</ddl:columnDefinition>
+		<ddl:tableConstraintDefinition name="SolarObject_PK">
+			<ddl:uniqueConstraintDefinition type="PRIMARY KEY">
+				<dep:simpleColumnReference name="SolarObjectId" />
+			</ddl:uniqueConstraintDefinition>
+		</ddl:tableConstraintDefinition>
+	</ddl:tableDefinition>
+	<ddl:tableDefinition name="SolarObjectIsInStarSystem" schema="dbo">
+		<ddl:columnDefinition name="SolarObjectId">
+			<ddt:exactNumeric type="INTEGER" />
+			<ddl:columnConstraintDefinition>
+				<ddl:notNullKeyword />
+			</ddl:columnConstraintDefinition>
+		</ddl:columnDefinition>
+		<ddl:columnDefinition name="StarSystemId">
+			<ddt:exactNumeric type="INTEGER" />
+			<ddl:columnConstraintDefinition>
+				<ddl:notNullKeyword />
+			</ddl:columnConstraintDefinition>
+		</ddl:columnDefinition>
+		<ddl:tableConstraintDefinition name="SolarObjectIsInStarSystem_PK">
+			<ddl:uniqueConstraintDefinition type="PRIMARY KEY">
+				<dep:simpleColumnReference name="SolarObjectId" />
+				<dep:simpleColumnReference name="StarSystemId" />
+			</ddl:uniqueConstraintDefinition>
+		</ddl:tableConstraintDefinition>
+	</ddl:tableDefinition>
+	<ddl:tableDefinition name="JumpGateLinksConnections" schema="dbo">
+		<ddl:columnDefinition name="JumpGateId">
+			<ddt:exactNumeric type="INTEGER" />
+			<ddl:columnConstraintDefinition>
+				<ddl:notNullKeyword />
+			</ddl:columnConstraintDefinition>
+		</ddl:columnDefinition>
+		<ddl:columnDefinition name="StarSystemId">
+			<ddt:exactNumeric type="INTEGER" />
+			<ddl:columnConstraintDefinition>
+				<ddl:notNullKeyword />
+			</ddl:columnConstraintDefinition>
+		</ddl:columnDefinition>
+		<ddl:tableConstraintDefinition name="JumpGateLinksConnections_PK">
+			<ddl:uniqueConstraintDefinition type="PRIMARY KEY">
+				<dep:simpleColumnReference name="JumpGateId" />
+				<dep:simpleColumnReference name="StarSystemId" />
+			</ddl:uniqueConstraintDefinition>
+		</ddl:tableConstraintDefinition>
+	</ddl:tableDefinition>
+	<ddl:tableDefinition name="SolarObjectType" schema="dbo">
+		<ddl:columnDefinition name="SolarObjectTypeId">
+			<ddt:exactNumeric type="INTEGER" />
+			<ddl:identityColumnSpecification type="ALWAYS">
+				<ddl:sequenceGeneratorStartWithOption>
+					<ddt:exactNumericLiteral value="1" />
+				</ddl:sequenceGeneratorStartWithOption>
+				<ddl:sequenceGeneratorIncrementByOption>
+					<ddt:exactNumericLiteral value="1" />
+				</ddl:sequenceGeneratorIncrementByOption>
+			</ddl:identityColumnSpecification>
+			<ddl:columnConstraintDefinition>
+				<ddl:notNullKeyword />
+			</ddl:columnConstraintDefinition>
+		</ddl:columnDefinition>
+		<ddl:columnDefinition name="SolarObjectTypeName">
+			<ddt:characterString type="CHARACTER VARYING" length="32" />
+			<ddl:columnConstraintDefinition>
+				<ddl:notNullKeyword />
+			</ddl:columnConstraintDefinition>
+		</ddl:columnDefinition>
+		<ddl:tableConstraintDefinition name="SolarObjectType_PK">
+			<ddl:uniqueConstraintDefinition type="PRIMARY KEY">
+				<dep:simpleColumnReference name="SolarObjectTypeId" />
+			</ddl:uniqueConstraintDefinition>
+		</ddl:tableConstraintDefinition>
+		<ddl:tableConstraintDefinition name="SolarObjectType_UC">
+			<ddl:uniqueConstraintDefinition type="UNIQUE">
+				<dep:simpleColumnReference name="SolarObjectTypeName" />
+			</ddl:uniqueConstraintDefinition>
+		</ddl:tableConstraintDefinition>
+	</ddl:tableDefinition>
+	<ddl:tableDefinition name="TradeLaneRing" schema="dbo">
+		<ddl:columnDefinition name="TradeLaneRingId">
+			<ddt:exactNumeric type="INTEGER" />
+			<ddl:columnConstraintDefinition>
+				<ddl:notNullKeyword />
+			</ddl:columnConstraintDefinition>
+		</ddl:columnDefinition>
+		<ddl:columnDefinition name="ConnectsToTradeLaneRingId">
+			<ddt:exactNumeric type="INTEGER" />
+		</ddl:columnDefinition>
+		<ddl:columnDefinition name="IsEndPoint">
+			<ddt:boolean type="BOOLEAN" />
+		</ddl:columnDefinition>
+		<ddl:tableConstraintDefinition name="TradeLaneRing_PK">
+			<ddl:uniqueConstraintDefinition type="PRIMARY KEY">
+				<dep:simpleColumnReference name="TradeLaneRingId" />
+			</ddl:uniqueConstraintDefinition>
+		</ddl:tableConstraintDefinition>
+	</ddl:tableDefinition>
+	<ddl:tableDefinition name="Base" schema="dbo">
+		<ddl:columnDefinition name="BaseId">
+			<ddt:exactNumeric type="INTEGER" />
+			<ddl:columnConstraintDefinition>
+				<ddl:notNullKeyword />
+			</ddl:columnConstraintDefinition>
+		</ddl:columnDefinition>
+		<ddl:columnDefinition name="FactionId">
+			<ddt:exactNumeric type="INTEGER" />
+			<ddl:columnConstraintDefinition>
+				<ddl:notNullKeyword />
+			</ddl:columnConstraintDefinition>
+		</ddl:columnDefinition>
+		<ddl:tableConstraintDefinition name="Base_UC">
+			<ddl:uniqueConstraintDefinition type="UNIQUE">
+				<dep:simpleColumnReference name="FactionId" />
+			</ddl:uniqueConstraintDefinition>
+		</ddl:tableConstraintDefinition>
+		<ddl:tableConstraintDefinition name="Base_PK">
+			<ddl:uniqueConstraintDefinition type="PRIMARY KEY">
+				<dep:simpleColumnReference name="BaseId" />
+			</ddl:uniqueConstraintDefinition>
+		</ddl:tableConstraintDefinition>
+	</ddl:tableDefinition>
+	<ddl:tableDefinition name="Faction" schema="dbo">
+		<ddl:columnDefinition name="FactionId">
+			<ddt:exactNumeric type="INTEGER" />
+			<ddl:identityColumnSpecification type="ALWAYS">
+				<ddl:sequenceGeneratorStartWithOption>
+					<ddt:exactNumericLiteral value="1" />
+				</ddl:sequenceGeneratorStartWithOption>
+				<ddl:sequenceGeneratorIncrementByOption>
+					<ddt:exactNumericLiteral value="1" />
+				</ddl:sequenceGeneratorIncrementByOption>
+			</ddl:identityColumnSpecification>
+			<ddl:columnConstraintDefinition>
+				<ddl:notNullKeyword />
+			</ddl:columnConstraintDefinition>
+		</ddl:columnDefinition>
+		<ddl:columnDefinition name="FactionName">
+			<ddt:characterString type="CHARACTER VARYING" length="64" />
+			<ddl:columnConstraintDefinition>
+				<ddl:notNullKeyword />
+			</ddl:columnConstraintDefinition>
+		</ddl:columnDefinition>
+		<ddl:tableConstraintDefinition name="Faction_PK">
+			<ddl:uniqueConstraintDefinition type="PRIMARY KEY">
+				<dep:simpleColumnReference name="FactionId" />
+			</ddl:uniqueConstraintDefinition>
+		</ddl:tableConstraintDefinition>
+		<ddl:tableConstraintDefinition name="Faction_UC">
+			<ddl:uniqueConstraintDefinition type="UNIQUE">
+				<dep:simpleColumnReference name="FactionName" />
+			</ddl:uniqueConstraintDefinition>
+		</ddl:tableConstraintDefinition>
+	</ddl:tableDefinition>
+	<ddl:alterTableStatement name="StarSystem" schema="dbo">
+		<ddl:addTableConstraintDefinition name="StarSystem_FK">
+			<ddl:referentialConstraintDefinition>
+				<dep:simpleColumnReference name="CoordinateId" />
+				<ddl:referencesSpecification name="Coordinate" onDelete="RESTRICT" onUpdate="RESTRICT" schema="dbo">
+					<dep:simpleColumnReference name="CoordinateId" />
+				</ddl:referencesSpecification>
+			</ddl:referentialConstraintDefinition>
+		</ddl:addTableConstraintDefinition>
+	</ddl:alterTableStatement>
+	<ddl:alterTableStatement name="SolarObject" schema="dbo">
+		<ddl:addTableConstraintDefinition name="SolarObject_FK1">
+			<ddl:referentialConstraintDefinition>
+				<dep:simpleColumnReference name="CoordinateId" />
+				<ddl:referencesSpecification name="Coordinate" onDelete="RESTRICT" onUpdate="RESTRICT" schema="dbo">
+					<dep:simpleColumnReference name="CoordinateId" />
+				</ddl:referencesSpecification>
+			</ddl:referentialConstraintDefinition>
+		</ddl:addTableConstraintDefinition>
+	</ddl:alterTableStatement>
+	<ddl:alterTableStatement name="SolarObject" schema="dbo">
+		<ddl:addTableConstraintDefinition name="SolarObject_FK2">
+			<ddl:referentialConstraintDefinition>
+				<dep:simpleColumnReference name="SolarObjectTypeId" />
+				<ddl:referencesSpecification name="SolarObjectType" onDelete="RESTRICT" onUpdate="RESTRICT" schema="dbo">
+					<dep:simpleColumnReference name="SolarObjectTypeId" />
+				</ddl:referencesSpecification>
+			</ddl:referentialConstraintDefinition>
+		</ddl:addTableConstraintDefinition>
+	</ddl:alterTableStatement>
+	<ddl:alterTableStatement name="SolarObjectIsInStarSystem" schema="dbo">
+		<ddl:addTableConstraintDefinition name="SolarObjectIsInStarSystem_FK1">
+			<ddl:referentialConstraintDefinition>
+				<dep:simpleColumnReference name="SolarObjectId" />
+				<ddl:referencesSpecification name="SolarObject" onDelete="RESTRICT" onUpdate="RESTRICT" schema="dbo">
+					<dep:simpleColumnReference name="SolarObjectId" />
+				</ddl:referencesSpecification>
+			</ddl:referentialConstraintDefinition>
+		</ddl:addTableConstraintDefinition>
+	</ddl:alterTableStatement>
+	<ddl:alterTableStatement name="SolarObjectIsInStarSystem" schema="dbo">
+		<ddl:addTableConstraintDefinition name="SolarObjectIsInStarSystem_FK2">
+			<ddl:referentialConstraintDefinition>
+				<dep:simpleColumnReference name="StarSystemId" />
+				<ddl:referencesSpecification name="StarSystem" onDelete="RESTRICT" onUpdate="RESTRICT" schema="dbo">
+					<dep:simpleColumnReference name="StarSystemId" />
+				</ddl:referencesSpecification>
+			</ddl:referentialConstraintDefinition>
+		</ddl:addTableConstraintDefinition>
+	</ddl:alterTableStatement>
+	<ddl:alterTableStatement name="JumpGateLinksConnections" schema="dbo">
+		<ddl:addTableConstraintDefinition name="JumpGateLinksConnections_FK1">
+			<ddl:referentialConstraintDefinition>
+				<dep:simpleColumnReference name="JumpGateId" />
+				<ddl:referencesSpecification name="SolarObject" onDelete="RESTRICT" onUpdate="RESTRICT" schema="dbo">
+					<dep:simpleColumnReference name="SolarObjectId" />
+				</ddl:referencesSpecification>
+			</ddl:referentialConstraintDefinition>
+		</ddl:addTableConstraintDefinition>
+	</ddl:alterTableStatement>
+	<ddl:alterTableStatement name="JumpGateLinksConnections" schema="dbo">
+		<ddl:addTableConstraintDefinition name="JumpGateLinksConnections_FK2">
+			<ddl:referentialConstraintDefinition>
+				<dep:simpleColumnReference name="StarSystemId" />
+				<ddl:referencesSpecification name="StarSystem" onDelete="RESTRICT" onUpdate="RESTRICT" schema="dbo">
+					<dep:simpleColumnReference name="StarSystemId" />
+				</ddl:referencesSpecification>
+			</ddl:referentialConstraintDefinition>
+		</ddl:addTableConstraintDefinition>
+	</ddl:alterTableStatement>
+	<ddl:alterTableStatement name="TradeLaneRing" schema="dbo">
+		<ddl:addTableConstraintDefinition name="TradeLaneRing_FK1">
+			<ddl:referentialConstraintDefinition>
+				<dep:simpleColumnReference name="ConnectsToTradeLaneRingId" />
+				<ddl:referencesSpecification name="TradeLaneRing" onDelete="RESTRICT" onUpdate="RESTRICT" schema="dbo">
+					<dep:simpleColumnReference name="TradeLaneRingId" />
+				</ddl:referencesSpecification>
+			</ddl:referentialConstraintDefinition>
+		</ddl:addTableConstraintDefinition>
+	</ddl:alterTableStatement>
+	<ddl:alterTableStatement name="TradeLaneRing" schema="dbo">
+		<ddl:addTableConstraintDefinition name="TradeLaneRing_FK2">
+			<ddl:referentialConstraintDefinition>
+				<dep:simpleColumnReference name="TradeLaneRingId" />
+				<ddl:referencesSpecification name="SolarObject" onDelete="RESTRICT" onUpdate="RESTRICT" schema="dbo">
+					<dep:simpleColumnReference name="SolarObjectId" />
+				</ddl:referencesSpecification>
+			</ddl:referentialConstraintDefinition>
+		</ddl:addTableConstraintDefinition>
+	</ddl:alterTableStatement>
+	<ddl:alterTableStatement name="Base" schema="dbo">
+		<ddl:addTableConstraintDefinition name="Base_FK1">
+			<ddl:referentialConstraintDefinition>
+				<dep:simpleColumnReference name="FactionId" />
+				<ddl:referencesSpecification name="Faction" onDelete="RESTRICT" onUpdate="RESTRICT" schema="dbo">
+					<dep:simpleColumnReference name="FactionId" />
+				</ddl:referencesSpecification>
+			</ddl:referentialConstraintDefinition>
+		</ddl:addTableConstraintDefinition>
+	</ddl:alterTableStatement>
+	<ddl:alterTableStatement name="Base" schema="dbo">
+		<ddl:addTableConstraintDefinition name="Base_FK2">
+			<ddl:referentialConstraintDefinition>
+				<dep:simpleColumnReference name="BaseId" />
+				<ddl:referencesSpecification name="SolarObject" onDelete="RESTRICT" onUpdate="RESTRICT" schema="dbo">
+					<dep:simpleColumnReference name="SolarObjectId" />
+				</ddl:referencesSpecification>
+			</ddl:referentialConstraintDefinition>
+		</ddl:addTableConstraintDefinition>
+	</ddl:alterTableStatement>
+	<dms:commitStatement />
+</dil:root>

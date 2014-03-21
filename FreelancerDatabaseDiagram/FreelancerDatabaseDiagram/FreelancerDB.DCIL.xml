@@ -10,6 +10,9 @@
 		<dcl:column name="StarSystemName" isNullable="false" isIdentity="false">
 			<dcl:predefinedDataType name="CHARACTER VARYING" length="64" />
 		</dcl:column>
+		<dcl:column name="ZoomScale" isNullable="false" isIdentity="false">
+			<dcl:predefinedDataType name="DECIMAL" />
+		</dcl:column>
 		<dcl:uniquenessConstraint name="StarSystem_PK" isPrimary="true">
 			<dcl:columnRef name="StarSystemId" />
 		</dcl:uniquenessConstraint>

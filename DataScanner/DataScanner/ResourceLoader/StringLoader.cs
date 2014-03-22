@@ -25,15 +25,16 @@ namespace DataScanner.ResourceLoader {
         }
 
         public string Load(int id) {
-            var sb = new StringBuilder(255);
+            var value = string.Empty;
+            var sb = new StringBuilder(512);
 
             int length = LoadString(libPtr, id, sb, sb.Capacity + 1);
 
-            if(length == 0) {
-                return null;
-            } else {
-                return sb.ToString();
+            if(length > 0) {
+                value = sb.ToString();
             }
+
+            return value;
         }
 
         public void Dispose() {

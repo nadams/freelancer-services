@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace DataScanner.Common {
@@ -25,6 +26,24 @@ namespace DataScanner.Common {
 
         IEnumerator IEnumerable.GetEnumerator() {
             return this.option.GetEnumerator();
+        }
+
+        bool IEquatable<T>.Equals(T other) {
+            return other.Equals(this.Value);
+        }
+
+        public override bool Equals(object obj) {
+            bool result = true;
+
+            if(obj is Some<T>) {
+                var otherValue = ((Some<T>)obj).Value;
+
+                result = ((IEquatable<T>)this).Equals(otherValue);
+            } else {
+                result = false;
+            }
+
+            return result;
         }
     }
 }

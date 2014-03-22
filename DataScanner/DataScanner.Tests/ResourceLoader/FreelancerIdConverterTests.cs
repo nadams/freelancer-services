@@ -1,9 +1,10 @@
-﻿using DataScanner.ResourceLoader;
+﻿using System.Diagnostics.CodeAnalysis;
+using DataScanner.ResourceLoader;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DataScanner.Tests.ResourceLoader {
 
-    [TestClass]
+    [TestClass, ExcludeFromCodeCoverage]
     public class FreelancerIdConverterTests {
 
         [TestMethod]
@@ -16,12 +17,21 @@ namespace DataScanner.Tests.ResourceLoader {
         }
 
         [TestMethod]
-        public void Convert_ValueOf_Returns() {
+        public void Convert_ValueOf260910_Returns64302() {
             var converter = new FreelancerIdConverter();
 
             var result = converter.Convert(260910);
 
             Assert.AreEqual(64302, result);
+        }
+
+        [TestMethod]
+        public void Convert_ValueLessThan16_ReturnsValue() {
+            var converter = new FreelancerIdConverter();
+
+            var result = converter.Convert(13);
+
+            Assert.AreEqual(13, result);
         }
     }
 }

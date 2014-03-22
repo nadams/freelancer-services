@@ -1,4 +1,5 @@
 ﻿using System;
+using DataScanner.Common;
 
 namespace DataScanner.ResourceLoader {
     public class FreelancerStringLoader : IDisposable {
@@ -6,6 +7,9 @@ namespace DataScanner.ResourceLoader {
         private readonly IFreelancerIdConverter converter;
 
         public FreelancerStringLoader(IStringLoader stringLoader, IFreelancerIdConverter converter) {
+            Assert.IsNotNull(stringLoader, "stringLoader");
+            Assert.IsNotNull(converter, "converter");
+
             this.loader = stringLoader;
             this.converter = converter;
         }

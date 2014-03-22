@@ -7,7 +7,11 @@ namespace DataScanner.ResourceLoader {
             var value = 0;
 
             if(id > 0) {
-                var hexValue = id.ToString("X").Substring(1);
+                var hexValue = id.ToString("X");
+
+                if(hexValue.Length > 1) {
+                    hexValue = hexValue.Substring(1);
+                }
 
                 value = int.Parse(hexValue, NumberStyles.HexNumber);
             }

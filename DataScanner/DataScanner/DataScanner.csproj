@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Common\Assert.cs" />
     <Compile Include="Common\IOption.cs" />
+    <Compile Include="Common\OptionExtensions.cs" />
     <Compile Include="Common\None.cs" />
     <Compile Include="Common\NoneHasNoValueException.cs" />
     <Compile Include="Common\Some.cs" />

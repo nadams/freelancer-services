@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Common\AssertTests.cs" />
     <Compile Include="Common\NoneTests.cs" />
+    <Compile Include="Common\OptionExtensionsTests.cs" />
     <Compile Include="Common\SomeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceLoader\FreelancerIdConverterTests.cs" />

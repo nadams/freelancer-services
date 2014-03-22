@@ -54,6 +54,12 @@
     <Compile Include="Common\NoneHasNoValueException.cs" />
     <Compile Include="Common\Some.cs" />
     <Compile Include="Common\Arguments.cs" />
+    <Compile Include="IOWrappers\DirectoryWrapper.cs" />
+    <Compile Include="IOWrappers\FileWrapper.cs" />
+    <Compile Include="IOWrappers\IDirectoryWrapper.cs" />
+    <Compile Include="IOWrappers\IFileWrapper.cs" />
+    <Compile Include="IOWrappers\IIOWrapper.cs" />
+    <Compile Include="IOWrappers\IOWrapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceLoader\FreelancerIdConverter.cs" />

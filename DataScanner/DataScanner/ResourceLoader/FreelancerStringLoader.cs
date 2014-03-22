@@ -1,5 +1,7 @@
-﻿namespace DataScanner.ResourceLoader {
-    public class FreelancerStringLoader {
+﻿using System;
+
+namespace DataScanner.ResourceLoader {
+    public class FreelancerStringLoader : IDisposable {
         private readonly IStringLoader loader;
         private readonly IFreelancerIdConverter converter;
 

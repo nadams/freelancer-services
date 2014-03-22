@@ -44,6 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\IOption.cs" />
+    <Compile Include="Common\None.cs" />
+    <Compile Include="Common\NoneHasNoValueException.cs" />
+    <Compile Include="Common\Some.cs" />
     <Compile Include="Parameters\Options.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

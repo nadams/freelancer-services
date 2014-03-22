@@ -14,12 +14,12 @@ namespace DataScanner.ResourceLoader {
             this.converter = converter;
         }
 
-        public string GetString(int id) {
-            var value = string.Empty;
+        public IOption<string> GetString(int id) {
+            IOption<string> value = new None<string>();
             var convertedId = this.converter.Convert(id);
 
             if(convertedId > 0) {
-                value = loader.Load(convertedId);
+                value = new Some<string>(loader.Load(convertedId));
             }
 
             return value;

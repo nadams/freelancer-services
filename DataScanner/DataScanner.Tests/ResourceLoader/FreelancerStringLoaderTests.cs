@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using DataScanner.Common;
 using DataScanner.ResourceLoader;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace DataScanner.Tests.ResourceLoader {
 
@@ -20,24 +22,24 @@ namespace DataScanner.Tests.ResourceLoader {
         }
 
         [TestMethod]
-        public void GetString_IdOfZero_ReturnsEmptyString() {
+        public void GetString_IdOfZero_ReturnsNone() {
             var stringLoader = new FreelancerStringLoader(this.GetEmptyStringLoader(), new FreelancerIdConverter());
 
             var result = stringLoader.GetString(0);
 
-            Assert.AreEqual(string.Empty, result);
+            Assert.IsInstanceOfType(result, typeof(None<string>));
         }
 
         [TestMethod]
         public void GetString_IdGreaterThanZero_NonEmptyStringReturned() {
             var stringLoader = new Mock<IStringLoader>();
-            stringLoader.Setup(x => x.Load(It.IsInRange<int>(1, int.MaxValue, Range.Inclusive))).Returns("non-empty string");
+            stringLoader.Setup(x => x.Load(It.IsAny<int>())).Returns(string.Empty);
 
             var freelancerStringLoader = new FreelancerStringLoader(stringLoader.Object, new FreelancerIdConverter());
 
             var result = freelancerStringLoader.GetString(1);
 
-            Assert.AreNotEqual(string.Empty, result);
+            Assert.IsInstanceOfType(result, typeof(Some<string>));
         }
 
         private IStringLoader GetEmptyStringLoader() {

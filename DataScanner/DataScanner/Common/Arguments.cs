@@ -1,8 +1,11 @@
-﻿using CommandLine;
+﻿using System.Diagnostics.CodeAnalysis;
+using CommandLine;
 using CommandLine.Text;
 
-namespace DataScanner.Parameters {
-    public class Options {
+namespace DataScanner.Common {
+
+    [ExcludeFromCodeCoverage]
+    public class Arguments {
         [Option('d', "directory", Required = true, HelpText = "Base directory of the freelancer install.")]
         public string FreelancerDirectory { get; set; }
 

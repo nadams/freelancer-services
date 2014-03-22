@@ -1,12 +1,12 @@
 ﻿using CommandLine;
-using DataScanner.Parameters;
+using DataScanner.Common;
 
 namespace DataScanner {
     public class Program {
         public static void Main(string[] args) {
-            var options = new Options();
+            var arguments = new Arguments();
 
-            if(Parser.Default.ParseArguments(args, options)) {
+            if(Parser.Default.ParseArguments(args, arguments)) {
                 
             }
         }

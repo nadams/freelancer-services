@@ -53,5 +53,12 @@ namespace DataScanner.Tests.Common {
 
             Assert.IsFalse(((IEquatable<object>)none).Equals(new object()));
         }
+
+        [TestMethod]
+        public void GetHashCode_ReturnsNegativeOne() {
+            var none = new None<object>();
+
+            Assert.AreEqual(-1, none.GetHashCode());
+        }
     }
 }

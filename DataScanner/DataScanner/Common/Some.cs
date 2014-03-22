@@ -45,5 +45,9 @@ namespace DataScanner.Common {
 
             return result;
         }
+
+        public override int GetHashCode() {
+            return this.Value.GetHashCode();
+        }
     }
 }

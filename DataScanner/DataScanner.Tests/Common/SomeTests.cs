@@ -65,5 +65,13 @@ namespace DataScanner.Tests.Common {
 
             Assert.IsFalse(some1.Equals(some2));
         }
+
+        [TestMethod]
+        public void GetHashCode_ReturnsValueHashCode() {
+            var value = "some string";
+            var some = new Some<string>(value);
+
+            Assert.AreEqual(value.GetHashCode(), some.GetHashCode());
+        }
     }
 }

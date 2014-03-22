@@ -33,5 +33,9 @@ namespace DataScanner.Common {
         public override bool Equals(object obj) {
             return obj is None<T>;
         }
+
+        public override int GetHashCode() {
+            return -1;
+        }
     }
 }

@@ -5,8 +5,8 @@ namespace DataScanner.IOWrappers {
 
     [ExcludeFromCodeCoverage]
     public class FileWrapper : IFileWrapper {
-        public FileStream OpenRead(string path) {
-            return File.OpenRead(path);
+        public StreamReader OpenText(string path) {
+            return File.OpenText(path);
         }
 
         public bool Exists(string path) {

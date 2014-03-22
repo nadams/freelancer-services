@@ -2,7 +2,7 @@
 
 namespace DataScanner.IOWrappers {
     public interface IFileWrapper {
-        FileStream OpenRead(string path);
+        StreamReader OpenText(string path);
         bool Exists(string path);
     }
 }

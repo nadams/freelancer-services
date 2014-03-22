@@ -60,6 +60,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceLoader\FreelancerIdConverterTests.cs" />
     <Compile Include="ResourceLoader\FreelancerStringLoaderTests.cs" />
+    <Compile Include="Scanners\INIScannerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataScanner\DataScanner.csproj">

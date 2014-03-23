@@ -13,22 +13,22 @@ namespace DataScanner.Tests.Scanners {
 
         [TestMethod]
         public void ScanINI_ContentIsEmpty_EmptyListReturned() {
-            var scanner = new INIScanner();
+            using(var scanner = new INIScanner(this.GetStreamReader(""))) {
+                var result = scanner.ScanINI();
 
-            var result = scanner.ScanINI(this.GetStreamReader(""));
-
-            Assert.IsFalse(result.Any());
+                Assert.IsFalse(result.Any());
+            }
         }
 
         [TestMethod]
         public void ScanINI_ContentJustHasSection_SectionWithNoValuesReturned() {
             var content = "[system]" + Environment.NewLine + Environment.NewLine;
-            var scanner = new INIScanner();
+            using(var scanner = new INIScanner(this.GetStreamReader(content))) {
+                var result = scanner.ScanINI();
 
-            var result = scanner.ScanINI(this.GetStreamReader(content));
-
-            Assert.AreEqual("[system]", result.First().Item1);
-            Assert.IsFalse(result.First().Item2.Any());
+                Assert.AreEqual("[system]", result.First().Item1);
+                Assert.IsFalse(result.First().Item2.Any());
+            }
         }
 
         [TestMethod]
@@ -40,12 +40,12 @@ test2 = 2
 
 ";
 
-            var scanner = new INIScanner();
+            using(var scanner = new INIScanner(this.GetStreamReader(content))) {
+                var result = scanner.ScanINI();
 
-            var result = scanner.ScanINI(this.GetStreamReader(content));
-
-            Assert.AreEqual("1", result.First().Item2["test1"]);
-            Assert.AreEqual("2", result.First().Item2["test2"]);
+                Assert.AreEqual("1", result.First().Item2["test1"]);
+                Assert.AreEqual("2", result.First().Item2["test2"]);
+            }
         }
 
         [TestMethod, ExpectedException(typeof(ArgumentException))]
@@ -57,9 +57,9 @@ test1 = 2
 
 ";
 
-            var scanner = new INIScanner();
-
-            var result = scanner.ScanINI(this.GetStreamReader(content));
+            using(var scanner = new INIScanner(this.GetStreamReader(content))) {
+                var result = scanner.ScanINI();
+            }
         }
 
         private StreamReader GetStreamReader(string content) {

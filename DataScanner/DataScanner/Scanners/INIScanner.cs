@@ -1,19 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using DataScanner.Common;
 
 namespace DataScanner.Scanners {
-    public class INIScanner {
-        public List<Tuple<string, IDictionary<string, string>>> ScanINI(StreamReader stream) {
+    public class INIScanner : IDisposable {
+        private readonly StreamReader reader;
+
+        public INIScanner(StreamReader reader) {
+            Assert.IsNotNull(reader, "reader");
+
+            this.reader = reader;
+        }
+
+        public List<Tuple<string, IDictionary<string, string>>> ScanINI() {
             var result = new List<Tuple<string, IDictionary<string, string>>>();
 
             string line;
-            while((line = stream.ReadLine()) != null) {
+            while((line = this.reader.ReadLine()) != null) {
                 if(line.StartsWith("[") && line.EndsWith("]")) {
                     var values = new Dictionary<string, string>();
                     var section = new Tuple<string, IDictionary<string, string>>(line, values);
 
-                    while((line = stream.ReadLine()) != string.Empty) {
+                    while((line = this.reader.ReadLine()) != string.Empty) {
                         var lineValue = line.Split(new char[] { '=' }, 2);
 
                         if(lineValue.Length == 2) {
@@ -26,6 +35,10 @@ namespace DataScanner.Scanners {
             }
 
             return result;
+        }
+
+        public void Dispose() {
+            this.reader.Dispose();
         }
     }
 }

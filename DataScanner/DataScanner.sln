@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{38396C
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataScanner.Data", "DataScanner.Data\DataScanner.Data.csproj", "{367FC68E-9E11-4077-8FDA-132F130A695F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{40856A92-6EC8-43C8-8BC7-0EE321E90E9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40856A92-6EC8-43C8-8BC7-0EE321E90E9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40856A92-6EC8-43C8-8BC7-0EE321E90E9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{367FC68E-9E11-4077-8FDA-132F130A695F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{367FC68E-9E11-4077-8FDA-132F130A695F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{367FC68E-9E11-4077-8FDA-132F130A695F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{367FC68E-9E11-4077-8FDA-132F130A695F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

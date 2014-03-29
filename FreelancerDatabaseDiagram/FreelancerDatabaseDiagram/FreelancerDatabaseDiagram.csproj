@@ -42,11 +42,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FreelancerDB1._ORMCustomToolReport.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FreelancerDB.orm</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="FreelancerDB.orm">
+      <Generator>ORMCustomTool</Generator>
+      <LastGenOutput>FreelancerDB1._ORMCustomToolReport.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup Condition="Exists('FreelancerDB.orm')">
+    <None Include="FreelancerDB.DCIL.xml">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FreelancerDB.orm</DependentUpon>
+      <ORMGenerator>ConceptualDBtoDCL</ORMGenerator>
+    </None>
+    <None Include="FreelancerDB.DDIL.xml">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FreelancerDB.orm</DependentUpon>
+      <ORMGenerator>DCILtoDDIL</ORMGenerator>
+    </None>
+    <None Include="FreelancerDB.SQLServer.sql">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FreelancerDB.orm</DependentUpon>
+      <ORMGenerator>DDILtoSQLServer</ORMGenerator>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -41,6 +41,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,11 +50,64 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Coordinate.cs">
+      <DependentUpon>FreelancerServices.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Faction.cs">
+      <DependentUpon>FreelancerServices.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FreelancerServices.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FreelancerServices.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FreelancerServices.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FreelancerServices.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FreelancerServices.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FreelancerServices.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SolarObject.cs">
+      <DependentUpon>FreelancerServices.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SolarObjectType.cs">
+      <DependentUpon>FreelancerServices.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StarSystem.cs">
+      <DependentUpon>FreelancerServices.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TradeLaneRing.cs">
+      <DependentUpon>FreelancerServices.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EntityDeploy Include="FreelancerServices.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>FreelancerServices.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="FreelancerServices.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FreelancerServices.edmx</DependentUpon>
+      <LastGenOutput>FreelancerServices.Context.cs</LastGenOutput>
+    </None>
+    <None Include="FreelancerServices.edmx.diagram">
+      <DependentUpon>FreelancerServices.edmx</DependentUpon>
+    </None>
+    <None Include="FreelancerServices.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FreelancerServices.edmx</DependentUpon>
+      <LastGenOutput>FreelancerServices.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

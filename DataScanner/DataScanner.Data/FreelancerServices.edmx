@@ -1,0 +1,557 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FreelancerServicesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Base">
+          <Key>
+            <PropertyRef Name="BaseId" />
+          </Key>
+          <Property Name="BaseId" Type="int" Nullable="false" />
+          <Property Name="FactionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Coordinate">
+          <Key>
+            <PropertyRef Name="CoordinateId" />
+          </Key>
+          <Property Name="CoordinateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="X" Type="int" Nullable="false" />
+          <Property Name="Y" Type="int" Nullable="false" />
+          <Property Name="Z" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Faction">
+          <Key>
+            <PropertyRef Name="FactionId" />
+          </Key>
+          <Property Name="FactionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FactionName" Type="nvarchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="JumpGateLinksConnections">
+          <Key>
+            <PropertyRef Name="JumpGateId" />
+            <PropertyRef Name="StarSystemId" />
+          </Key>
+          <Property Name="JumpGateId" Type="int" Nullable="false" />
+          <Property Name="StarSystemId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SolarObject">
+          <Key>
+            <PropertyRef Name="SolarObjectId" />
+          </Key>
+          <Property Name="SolarObjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CoordinateId" Type="int" Nullable="false" />
+          <Property Name="SolarObjectName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="SolarObjectTypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SolarObjectIsInStarSystem">
+          <Key>
+            <PropertyRef Name="SolarObjectId" />
+            <PropertyRef Name="StarSystemId" />
+          </Key>
+          <Property Name="SolarObjectId" Type="int" Nullable="false" />
+          <Property Name="StarSystemId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SolarObjectType">
+          <Key>
+            <PropertyRef Name="SolarObjectTypeId" />
+          </Key>
+          <Property Name="SolarObjectTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SolarObjectTypeName" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StarSystem">
+          <Key>
+            <PropertyRef Name="StarSystemId" />
+          </Key>
+          <Property Name="StarSystemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CoordinateId" Type="int" Nullable="false" />
+          <Property Name="StarSystemName" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="ZoomScale" Type="decimal" Precision="38" Scale="38" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TradeLaneRing">
+          <Key>
+            <PropertyRef Name="TradeLaneRingId" />
+          </Key>
+          <Property Name="TradeLaneRingId" Type="int" Nullable="false" />
+          <Property Name="ConnectsToTradeLaneRingId" Type="int" />
+          <Property Name="IsEndPoint" Type="bit" />
+        </EntityType>
+        <Association Name="Base_FK1">
+          <End Role="Faction" Type="Self.Faction" Multiplicity="1" />
+          <End Role="Base" Type="Self.Base" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faction">
+              <PropertyRef Name="FactionId" />
+            </Principal>
+            <Dependent Role="Base">
+              <PropertyRef Name="FactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Base_FK2">
+          <End Role="SolarObject" Type="Self.SolarObject" Multiplicity="1" />
+          <End Role="Base" Type="Self.Base" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="SolarObject">
+              <PropertyRef Name="SolarObjectId" />
+            </Principal>
+            <Dependent Role="Base">
+              <PropertyRef Name="BaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="JumpGateLinksConnections_FK1">
+          <End Role="SolarObject" Type="Self.SolarObject" Multiplicity="1" />
+          <End Role="JumpGateLinksConnections" Type="Self.JumpGateLinksConnections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SolarObject">
+              <PropertyRef Name="SolarObjectId" />
+            </Principal>
+            <Dependent Role="JumpGateLinksConnections">
+              <PropertyRef Name="JumpGateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="JumpGateLinksConnections_FK2">
+          <End Role="StarSystem" Type="Self.StarSystem" Multiplicity="1" />
+          <End Role="JumpGateLinksConnections" Type="Self.JumpGateLinksConnections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StarSystem">
+              <PropertyRef Name="StarSystemId" />
+            </Principal>
+            <Dependent Role="JumpGateLinksConnections">
+              <PropertyRef Name="StarSystemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SolarObject_FK1">
+          <End Role="Coordinate" Type="Self.Coordinate" Multiplicity="1" />
+          <End Role="SolarObject" Type="Self.SolarObject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coordinate">
+              <PropertyRef Name="CoordinateId" />
+            </Principal>
+            <Dependent Role="SolarObject">
+              <PropertyRef Name="CoordinateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SolarObject_FK2">
+          <End Role="SolarObjectType" Type="Self.SolarObjectType" Multiplicity="1" />
+          <End Role="SolarObject" Type="Self.SolarObject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SolarObjectType">
+              <PropertyRef Name="SolarObjectTypeId" />
+            </Principal>
+            <Dependent Role="SolarObject">
+              <PropertyRef Name="SolarObjectTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SolarObjectIsInStarSystem_FK1">
+          <End Role="SolarObject" Type="Self.SolarObject" Multiplicity="1" />
+          <End Role="SolarObjectIsInStarSystem" Type="Self.SolarObjectIsInStarSystem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SolarObject">
+              <PropertyRef Name="SolarObjectId" />
+            </Principal>
+            <Dependent Role="SolarObjectIsInStarSystem">
+              <PropertyRef Name="SolarObjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SolarObjectIsInStarSystem_FK2">
+          <End Role="StarSystem" Type="Self.StarSystem" Multiplicity="1" />
+          <End Role="SolarObjectIsInStarSystem" Type="Self.SolarObjectIsInStarSystem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StarSystem">
+              <PropertyRef Name="StarSystemId" />
+            </Principal>
+            <Dependent Role="SolarObjectIsInStarSystem">
+              <PropertyRef Name="StarSystemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StarSystem_FK">
+          <End Role="Coordinate" Type="Self.Coordinate" Multiplicity="1" />
+          <End Role="StarSystem" Type="Self.StarSystem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coordinate">
+              <PropertyRef Name="CoordinateId" />
+            </Principal>
+            <Dependent Role="StarSystem">
+              <PropertyRef Name="CoordinateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TradeLaneRing_FK1">
+          <End Role="TradeLaneRing" Type="Self.TradeLaneRing" Multiplicity="0..1" />
+          <End Role="TradeLaneRing1" Type="Self.TradeLaneRing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TradeLaneRing">
+              <PropertyRef Name="TradeLaneRingId" />
+            </Principal>
+            <Dependent Role="TradeLaneRing1">
+              <PropertyRef Name="ConnectsToTradeLaneRingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TradeLaneRing_FK2">
+          <End Role="SolarObject" Type="Self.SolarObject" Multiplicity="1" />
+          <End Role="TradeLaneRing" Type="Self.TradeLaneRing" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="SolarObject">
+              <PropertyRef Name="SolarObjectId" />
+            </Principal>
+            <Dependent Role="TradeLaneRing">
+              <PropertyRef Name="TradeLaneRingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FreelancerServicesModelStoreContainer">
+          <EntitySet Name="Base" EntityType="Self.Base" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Coordinate" EntityType="Self.Coordinate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Faction" EntityType="Self.Faction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JumpGateLinksConnections" EntityType="Self.JumpGateLinksConnections" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SolarObject" EntityType="Self.SolarObject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SolarObjectIsInStarSystem" EntityType="Self.SolarObjectIsInStarSystem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SolarObjectType" EntityType="Self.SolarObjectType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StarSystem" EntityType="Self.StarSystem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TradeLaneRing" EntityType="Self.TradeLaneRing" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Base_FK1" Association="Self.Base_FK1">
+            <End Role="Faction" EntitySet="Faction" />
+            <End Role="Base" EntitySet="Base" />
+          </AssociationSet>
+          <AssociationSet Name="Base_FK2" Association="Self.Base_FK2">
+            <End Role="SolarObject" EntitySet="SolarObject" />
+            <End Role="Base" EntitySet="Base" />
+          </AssociationSet>
+          <AssociationSet Name="JumpGateLinksConnections_FK1" Association="Self.JumpGateLinksConnections_FK1">
+            <End Role="SolarObject" EntitySet="SolarObject" />
+            <End Role="JumpGateLinksConnections" EntitySet="JumpGateLinksConnections" />
+          </AssociationSet>
+          <AssociationSet Name="JumpGateLinksConnections_FK2" Association="Self.JumpGateLinksConnections_FK2">
+            <End Role="StarSystem" EntitySet="StarSystem" />
+            <End Role="JumpGateLinksConnections" EntitySet="JumpGateLinksConnections" />
+          </AssociationSet>
+          <AssociationSet Name="SolarObject_FK1" Association="Self.SolarObject_FK1">
+            <End Role="Coordinate" EntitySet="Coordinate" />
+            <End Role="SolarObject" EntitySet="SolarObject" />
+          </AssociationSet>
+          <AssociationSet Name="SolarObject_FK2" Association="Self.SolarObject_FK2">
+            <End Role="SolarObjectType" EntitySet="SolarObjectType" />
+            <End Role="SolarObject" EntitySet="SolarObject" />
+          </AssociationSet>
+          <AssociationSet Name="SolarObjectIsInStarSystem_FK1" Association="Self.SolarObjectIsInStarSystem_FK1">
+            <End Role="SolarObject" EntitySet="SolarObject" />
+            <End Role="SolarObjectIsInStarSystem" EntitySet="SolarObjectIsInStarSystem" />
+          </AssociationSet>
+          <AssociationSet Name="SolarObjectIsInStarSystem_FK2" Association="Self.SolarObjectIsInStarSystem_FK2">
+            <End Role="StarSystem" EntitySet="StarSystem" />
+            <End Role="SolarObjectIsInStarSystem" EntitySet="SolarObjectIsInStarSystem" />
+          </AssociationSet>
+          <AssociationSet Name="StarSystem_FK" Association="Self.StarSystem_FK">
+            <End Role="Coordinate" EntitySet="Coordinate" />
+            <End Role="StarSystem" EntitySet="StarSystem" />
+          </AssociationSet>
+          <AssociationSet Name="TradeLaneRing_FK1" Association="Self.TradeLaneRing_FK1">
+            <End Role="TradeLaneRing" EntitySet="TradeLaneRing" />
+            <End Role="TradeLaneRing1" EntitySet="TradeLaneRing" />
+          </AssociationSet>
+          <AssociationSet Name="TradeLaneRing_FK2" Association="Self.TradeLaneRing_FK2">
+            <End Role="SolarObject" EntitySet="SolarObject" />
+            <End Role="TradeLaneRing" EntitySet="TradeLaneRing" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FreelancerServicesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Coordinate">
+          <Key>
+            <PropertyRef Name="CoordinateId" />
+          </Key>
+          <Property Name="CoordinateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="X" Type="Int32" Nullable="false" />
+          <Property Name="Y" Type="Int32" Nullable="false" />
+          <Property Name="Z" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SolarObjects" Relationship="Self.SolarObject_FK1" FromRole="Coordinate" ToRole="SolarObject" />
+          <NavigationProperty Name="StarSystems" Relationship="Self.StarSystem_FK" FromRole="Coordinate" ToRole="StarSystem" />
+        </EntityType>
+        <EntityType Name="Faction">
+          <Key>
+            <PropertyRef Name="FactionId" />
+          </Key>
+          <Property Name="FactionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FactionName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="SolarObjects" Relationship="Self.Base" FromRole="Faction" ToRole="SolarObject" />
+        </EntityType>
+        <EntityType Name="SolarObject">
+          <Key>
+            <PropertyRef Name="SolarObjectId" />
+          </Key>
+          <Property Name="SolarObjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CoordinateId" Type="Int32" Nullable="false" />
+          <Property Name="SolarObjectName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SolarObjectTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Coordinate" Relationship="Self.SolarObject_FK1" FromRole="SolarObject" ToRole="Coordinate" />
+          <NavigationProperty Name="SolarObjectType" Relationship="Self.SolarObject_FK2" FromRole="SolarObject" ToRole="SolarObjectType" />
+          <NavigationProperty Name="TradeLaneRing" Relationship="Self.TradeLaneRing_FK2" FromRole="SolarObject" ToRole="TradeLaneRing" />
+          <NavigationProperty Name="Faction" Relationship="Self.Base" FromRole="SolarObject" ToRole="Faction" />
+          <NavigationProperty Name="StarSystems" Relationship="Self.JumpGateLinksConnections" FromRole="SolarObject" ToRole="StarSystem" />
+          <NavigationProperty Name="StarSystems1" Relationship="Self.SolarObjectIsInStarSystem" FromRole="SolarObject" ToRole="StarSystem" />
+        </EntityType>
+        <EntityType Name="SolarObjectType">
+          <Key>
+            <PropertyRef Name="SolarObjectTypeId" />
+          </Key>
+          <Property Name="SolarObjectTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SolarObjectTypeName" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="SolarObjects" Relationship="Self.SolarObject_FK2" FromRole="SolarObjectType" ToRole="SolarObject" />
+        </EntityType>
+        <EntityType Name="StarSystem">
+          <Key>
+            <PropertyRef Name="StarSystemId" />
+          </Key>
+          <Property Name="StarSystemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CoordinateId" Type="Int32" Nullable="false" />
+          <Property Name="StarSystemName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ZoomScale" Type="Decimal" Precision="38" Scale="38" Nullable="false" />
+          <NavigationProperty Name="Coordinate" Relationship="Self.StarSystem_FK" FromRole="StarSystem" ToRole="Coordinate" />
+          <NavigationProperty Name="SolarObjects" Relationship="Self.JumpGateLinksConnections" FromRole="StarSystem" ToRole="SolarObject" />
+          <NavigationProperty Name="SolarObjects1" Relationship="Self.SolarObjectIsInStarSystem" FromRole="StarSystem" ToRole="SolarObject" />
+        </EntityType>
+        <EntityType Name="TradeLaneRing">
+          <Key>
+            <PropertyRef Name="TradeLaneRingId" />
+          </Key>
+          <Property Name="TradeLaneRingId" Type="Int32" Nullable="false" />
+          <Property Name="ConnectsToTradeLaneRingId" Type="Int32" />
+          <Property Name="IsEndPoint" Type="Boolean" />
+          <NavigationProperty Name="SolarObject" Relationship="Self.TradeLaneRing_FK2" FromRole="TradeLaneRing" ToRole="SolarObject" />
+          <NavigationProperty Name="TradeLaneRing1" Relationship="Self.TradeLaneRing_FK1" FromRole="TradeLaneRing" ToRole="TradeLaneRing1" />
+          <NavigationProperty Name="TradeLaneRing2" Relationship="Self.TradeLaneRing_FK1" FromRole="TradeLaneRing1" ToRole="TradeLaneRing" />
+        </EntityType>
+        <Association Name="SolarObject_FK1">
+          <End Role="Coordinate" Type="Self.Coordinate" Multiplicity="1" />
+          <End Role="SolarObject" Type="Self.SolarObject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coordinate">
+              <PropertyRef Name="CoordinateId" />
+            </Principal>
+            <Dependent Role="SolarObject">
+              <PropertyRef Name="CoordinateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StarSystem_FK">
+          <End Role="Coordinate" Type="Self.Coordinate" Multiplicity="1" />
+          <End Role="StarSystem" Type="Self.StarSystem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Coordinate">
+              <PropertyRef Name="CoordinateId" />
+            </Principal>
+            <Dependent Role="StarSystem">
+              <PropertyRef Name="CoordinateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SolarObject_FK2">
+          <End Role="SolarObjectType" Type="Self.SolarObjectType" Multiplicity="1" />
+          <End Role="SolarObject" Type="Self.SolarObject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SolarObjectType">
+              <PropertyRef Name="SolarObjectTypeId" />
+            </Principal>
+            <Dependent Role="SolarObject">
+              <PropertyRef Name="SolarObjectTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TradeLaneRing_FK2">
+          <End Role="SolarObject" Type="Self.SolarObject" Multiplicity="1" />
+          <End Role="TradeLaneRing" Type="Self.TradeLaneRing" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="SolarObject">
+              <PropertyRef Name="SolarObjectId" />
+            </Principal>
+            <Dependent Role="TradeLaneRing">
+              <PropertyRef Name="TradeLaneRingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TradeLaneRing_FK1">
+          <End Role="TradeLaneRing" Type="Self.TradeLaneRing" Multiplicity="0..1" />
+          <End Role="TradeLaneRing1" Type="Self.TradeLaneRing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TradeLaneRing">
+              <PropertyRef Name="TradeLaneRingId" />
+            </Principal>
+            <Dependent Role="TradeLaneRing1">
+              <PropertyRef Name="ConnectsToTradeLaneRingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Base">
+          <End Role="Faction" Type="Self.Faction" Multiplicity="0..1" />
+          <End Role="SolarObject" Type="Self.SolarObject" Multiplicity="*" />
+        </Association>
+        <Association Name="JumpGateLinksConnections">
+          <End Role="SolarObject" Type="Self.SolarObject" Multiplicity="*" />
+          <End Role="StarSystem" Type="Self.StarSystem" Multiplicity="*" />
+        </Association>
+        <Association Name="SolarObjectIsInStarSystem">
+          <End Role="SolarObject" Type="Self.SolarObject" Multiplicity="*" />
+          <End Role="StarSystem" Type="Self.StarSystem" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="FreelancerServicesEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Coordinates" EntityType="Self.Coordinate" />
+          <EntitySet Name="Factions" EntityType="Self.Faction" />
+          <EntitySet Name="SolarObjects" EntityType="Self.SolarObject" />
+          <EntitySet Name="SolarObjectTypes" EntityType="Self.SolarObjectType" />
+          <EntitySet Name="StarSystems" EntityType="Self.StarSystem" />
+          <EntitySet Name="TradeLaneRings" EntityType="Self.TradeLaneRing" />
+          <AssociationSet Name="SolarObject_FK1" Association="Self.SolarObject_FK1">
+            <End Role="Coordinate" EntitySet="Coordinates" />
+            <End Role="SolarObject" EntitySet="SolarObjects" />
+          </AssociationSet>
+          <AssociationSet Name="StarSystem_FK" Association="Self.StarSystem_FK">
+            <End Role="Coordinate" EntitySet="Coordinates" />
+            <End Role="StarSystem" EntitySet="StarSystems" />
+          </AssociationSet>
+          <AssociationSet Name="SolarObject_FK2" Association="Self.SolarObject_FK2">
+            <End Role="SolarObjectType" EntitySet="SolarObjectTypes" />
+            <End Role="SolarObject" EntitySet="SolarObjects" />
+          </AssociationSet>
+          <AssociationSet Name="TradeLaneRing_FK2" Association="Self.TradeLaneRing_FK2">
+            <End Role="SolarObject" EntitySet="SolarObjects" />
+            <End Role="TradeLaneRing" EntitySet="TradeLaneRings" />
+          </AssociationSet>
+          <AssociationSet Name="TradeLaneRing_FK1" Association="Self.TradeLaneRing_FK1">
+            <End Role="TradeLaneRing" EntitySet="TradeLaneRings" />
+            <End Role="TradeLaneRing1" EntitySet="TradeLaneRings" />
+          </AssociationSet>
+          <AssociationSet Name="Base" Association="Self.Base">
+            <End Role="Faction" EntitySet="Factions" />
+            <End Role="SolarObject" EntitySet="SolarObjects" />
+          </AssociationSet>
+          <AssociationSet Name="JumpGateLinksConnections" Association="Self.JumpGateLinksConnections">
+            <End Role="SolarObject" EntitySet="SolarObjects" />
+            <End Role="StarSystem" EntitySet="StarSystems" />
+          </AssociationSet>
+          <AssociationSet Name="SolarObjectIsInStarSystem" Association="Self.SolarObjectIsInStarSystem">
+            <End Role="SolarObject" EntitySet="SolarObjects" />
+            <End Role="StarSystem" EntitySet="StarSystems" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FreelancerServicesModelStoreContainer" CdmEntityContainer="FreelancerServicesEntities">
+          <EntitySetMapping Name="Coordinates">
+            <EntityTypeMapping TypeName="FreelancerServicesModel.Coordinate">
+              <MappingFragment StoreEntitySet="Coordinate">
+                <ScalarProperty Name="CoordinateId" ColumnName="CoordinateId" />
+                <ScalarProperty Name="X" ColumnName="X" />
+                <ScalarProperty Name="Y" ColumnName="Y" />
+                <ScalarProperty Name="Z" ColumnName="Z" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Factions">
+            <EntityTypeMapping TypeName="FreelancerServicesModel.Faction">
+              <MappingFragment StoreEntitySet="Faction">
+                <ScalarProperty Name="FactionId" ColumnName="FactionId" />
+                <ScalarProperty Name="FactionName" ColumnName="FactionName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SolarObjects">
+            <EntityTypeMapping TypeName="FreelancerServicesModel.SolarObject">
+              <MappingFragment StoreEntitySet="SolarObject">
+                <ScalarProperty Name="SolarObjectId" ColumnName="SolarObjectId" />
+                <ScalarProperty Name="CoordinateId" ColumnName="CoordinateId" />
+                <ScalarProperty Name="SolarObjectName" ColumnName="SolarObjectName" />
+                <ScalarProperty Name="SolarObjectTypeId" ColumnName="SolarObjectTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SolarObjectTypes">
+            <EntityTypeMapping TypeName="FreelancerServicesModel.SolarObjectType">
+              <MappingFragment StoreEntitySet="SolarObjectType">
+                <ScalarProperty Name="SolarObjectTypeId" ColumnName="SolarObjectTypeId" />
+                <ScalarProperty Name="SolarObjectTypeName" ColumnName="SolarObjectTypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StarSystems">
+            <EntityTypeMapping TypeName="FreelancerServicesModel.StarSystem">
+              <MappingFragment StoreEntitySet="StarSystem">
+                <ScalarProperty Name="StarSystemId" ColumnName="StarSystemId" />
+                <ScalarProperty Name="CoordinateId" ColumnName="CoordinateId" />
+                <ScalarProperty Name="StarSystemName" ColumnName="StarSystemName" />
+                <ScalarProperty Name="ZoomScale" ColumnName="ZoomScale" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TradeLaneRings">
+            <EntityTypeMapping TypeName="FreelancerServicesModel.TradeLaneRing">
+              <MappingFragment StoreEntitySet="TradeLaneRing">
+                <ScalarProperty Name="TradeLaneRingId" ColumnName="TradeLaneRingId" />
+                <ScalarProperty Name="ConnectsToTradeLaneRingId" ColumnName="ConnectsToTradeLaneRingId" />
+                <ScalarProperty Name="IsEndPoint" ColumnName="IsEndPoint" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Base" TypeName="FreelancerServicesModel.Base" StoreEntitySet="Base">
+            <EndProperty Name="Faction">
+              <ScalarProperty Name="FactionId" ColumnName="FactionId" />
+            </EndProperty>
+            <EndProperty Name="SolarObject">
+              <ScalarProperty Name="SolarObjectId" ColumnName="BaseId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="JumpGateLinksConnections" TypeName="FreelancerServicesModel.JumpGateLinksConnections" StoreEntitySet="JumpGateLinksConnections">
+            <EndProperty Name="SolarObject">
+              <ScalarProperty Name="SolarObjectId" ColumnName="JumpGateId" />
+            </EndProperty>
+            <EndProperty Name="StarSystem">
+              <ScalarProperty Name="StarSystemId" ColumnName="StarSystemId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="SolarObjectIsInStarSystem" TypeName="FreelancerServicesModel.SolarObjectIsInStarSystem" StoreEntitySet="SolarObjectIsInStarSystem">
+            <EndProperty Name="SolarObject">
+              <ScalarProperty Name="SolarObjectId" ColumnName="SolarObjectId" />
+            </EndProperty>
+            <EndProperty Name="StarSystem">
+              <ScalarProperty Name="StarSystemId" ColumnName="StarSystemId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
